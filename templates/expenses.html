@@ -1,0 +1,221 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Expense Management</h2>
+
+        <button class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#expenseModal">
+
+            <i class="fas fa-plus"></i>
+            Add Expense
+
+        </button>
+    </div>
+
+    <!-- Search -->
+
+    <div class="card shadow border-0 mb-4">
+
+        <div class="card-body">
+
+            <input type="text"
+                   id="expenseSearch"
+                   class="form-control"
+                   placeholder="Search expenses...">
+
+        </div>
+
+    </div>
+
+    <!-- Add Expense Modal -->
+
+    <div class="modal fade"
+         id="expenseModal">
+
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h5>Add Expense</h5>
+
+                    <button class="btn-close"
+                            data-bs-dismiss="modal">
+                    </button>
+
+                </div>
+
+                <form method="POST">
+
+                    <div class="modal-body">
+
+                        <div class="mb-3">
+
+                            <label>Category</label>
+
+                            <select name="category"
+                                    class="form-select">
+
+                                <option>Food</option>
+                                <option>Transportation</option>
+                                <option>Shopping</option>
+                                <option>Bills</option>
+                                <option>Entertainment</option>
+                                <option>Healthcare</option>
+                                <option>Education</option>
+                                <option>Others</option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label>Amount</label>
+
+                            <input type="number"
+                                   name="amount"
+                                   class="form-control">
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label>Description</label>
+
+                            <input type="text"
+                                   name="description"
+                                   class="form-control">
+
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label>Date</label>
+
+                            <input type="date"
+                                   name="date"
+                                   class="form-control">
+
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <button class="btn btn-success">
+
+                            Save Expense
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Expense Table -->
+
+    <div class="card shadow border-0">
+
+        <div class="card-body">
+
+            <table class="table table-hover">
+
+                <thead>
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>Category</th>
+                    <th>Amount</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th class="text-center">Action</th>
+
+                </tr>
+
+                </thead>
+
+                <tbody id="expenseTable">
+
+                {% for expense in expenses %}
+
+                <tr>
+
+                    <td>{{ expense.expense_id }}</td>
+                    <td>{{ expense.category }}</td>
+                    <td>₹{{ expense.amount }}</td>
+                    <td>{{ expense.description }}</td>
+                    <td>{{ expense.date }}</td>
+
+                    <td>
+
+                    <div class="action-buttons">
+
+                    <a href="/edit_expense/{{ expense.expense_id }}"
+                    class="btn btn-warning btn-sm">
+
+                    Edit
+
+                    </a>
+
+                    <a href="/delete_expense/{{ expense.expense_id }}"
+                    class="btn btn-danger btn-sm">
+
+                    Delete
+
+                    </a>
+
+                    </div>
+
+                    </td>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+document.getElementById("expenseSearch")
+.addEventListener("keyup", function() {
+
+let value = this.value.toLowerCase();
+
+let rows =
+document.querySelectorAll("#expenseTable tr");
+
+rows.forEach(row => {
+
+row.style.display =
+row.innerText.toLowerCase()
+.includes(value)
+? ""
+: "none";
+
+});
+
+});
+
+</script>
+
+{% endblock %}

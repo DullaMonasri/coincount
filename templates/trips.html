@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container py-4">
+
+<h2>Travel Management</h2>
+
+<form method="POST"
+class="card p-4 shadow border-0">
+
+<div class="row">
+
+<div class="col-md-6 mb-3">
+
+<label>Destination</label>
+
+<input type="text"
+name="destination"
+class="form-control">
+
+</div>
+
+<div class="col-md-3 mb-3">
+
+<label>Start Date</label>
+
+<input type="date"
+name="start"
+class="form-control">
+
+</div>
+
+<div class="col-md-3 mb-3">
+
+<label>End Date</label>
+
+<input type="date"
+name="end"
+class="form-control">
+
+</div>
+
+</div>
+
+<div class="mb-3">
+
+<label>Budget</label>
+
+<input type="number"
+name="budget"
+class="form-control">
+
+</div>
+
+<div class="mb-3">
+
+<label>Notes</label>
+
+<textarea
+name="notes"
+class="form-control"></textarea>
+
+</div>
+
+<button class="btn btn-success">
+
+Create Trip
+
+</button>
+
+</form>
+
+<div class="row mt-4">
+
+{% for trip in trips %}
+
+<div class="col-md-4">
+
+<div class="card shadow border-0">
+
+<div class="card-body">
+
+<h5>{{ trip.destination }}</h5>
+
+<p>
+Start:
+{{ trip.start_date }}
+</p>
+
+<p>
+End:
+{{ trip.end_date }}
+</p>
+
+<p>
+Budget:
+₹{{ trip.budget }}
+</p>
+
+<p>
+{{ trip.notes }}
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+{% endblock %}

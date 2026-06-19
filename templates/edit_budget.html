@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="card shadow border-0">
+
+        <div class="card-body p-4">
+
+            <h2 class="mb-4">
+
+                Edit Budget
+
+            </h2>
+
+            <form method="POST">
+
+                <div class="mb-3">
+
+                    <label>Category</label>
+
+                    <input type="text"
+                           name="category"
+                           value="{{ budget.category }}"
+                           class="form-control"
+                           required>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label>Budget Amount</label>
+
+                    <input type="number"
+                           name="amount"
+                           value="{{ budget.budget_amount }}"
+                           class="form-control"
+                           required>
+
+                </div>
+
+                <button class="btn btn-primary">
+
+                    Update Budget
+
+                </button>
+
+                <a href="/budget"
+                   class="btn btn-secondary">
+
+                    Cancel
+
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

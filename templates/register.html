@@ -1,0 +1,243 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="auth-page">
+
+    <div class="container">
+
+        <div class="row justify-content-center align-items-center min-vh-100">
+
+            <div class="col-lg-6 col-md-8">
+
+                <div class="card register-card shadow-lg border-0">
+
+                    <div class="card-body p-5">
+
+                        <div class="text-center mb-4">
+
+                            <div class="register-logo">
+
+                                <i class="fas fa-coins"></i>
+
+                            </div>
+
+                            <h2 class="fw-bold mt-3">
+
+                                Create Account
+
+                            </h2>
+
+                            <p class="text-muted">
+
+                                Join CoinCount and start managing
+                                your finances smarter.
+
+                            </p>
+
+                        </div>
+
+                        <form method="POST">
+
+                            <!-- Full Name -->
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+
+                                    Full Name
+
+                                </label>
+
+                                <input type="text"
+                                       name="name"
+                                       class="form-control form-control-lg"
+                                       placeholder="Enter your full name"
+                                       required>
+
+                            </div>
+
+                            <!-- Email -->
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+
+                                    Email Address
+
+                                </label>
+
+                                <input type="email"
+                                       name="email"
+                                       class="form-control form-control-lg"
+                                       placeholder="Enter your email"
+                                       required>
+
+                            </div>
+
+                            <!-- Password -->
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+
+                                    Password
+
+                                </label>
+
+                                <div class="input-group">
+
+                                    <input type="password"
+                                           id="password"
+                                           name="password"
+                                           class="form-control form-control-lg"
+                                           placeholder="Create password"
+                                           required>
+
+                                    <button type="button"
+                                            class="btn btn-outline-secondary"
+                                            onclick="togglePassword('password')">
+
+                                        <i class="fa fa-eye"></i>
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Confirm Password -->
+
+                            <div class="mb-3">
+
+                                <label class="form-label">
+
+                                    Confirm Password
+
+                                </label>
+
+                                <div class="input-group">
+
+                                    <input type="password"
+                                           id="confirmPassword"
+                                           name="confirm"
+                                           class="form-control form-control-lg"
+                                           placeholder="Confirm password"
+                                           required
+                                           onpaste="return false"
+                                           oncopy="return false"
+                                           oncut="return false">
+
+                                    <button type="button"
+                                            class="btn btn-outline-secondary"
+                                            onclick="togglePassword('confirmPassword')">
+
+                                        <i class="fa fa-eye"></i>
+
+                                    </button>
+
+                                </div>
+
+                                <small id="passwordMessage"
+                                       class="text-danger">
+
+                                </small>
+
+                            </div>
+
+                            <!-- Register Button -->
+
+                            <div class="d-grid">
+
+                                <button type="submit"
+                                        class="btn btn-primary btn-lg">
+
+                                    <i class="fas fa-user-plus me-2"></i>
+
+                                    Create Account
+
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                        <hr class="my-4">
+
+                        <div class="text-center">
+
+                            <span class="text-muted">
+
+                                Already have an account?
+
+                            </span>
+
+                            <a href="/login"
+                               class="fw-bold text-decoration-none">
+
+                                Login
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const password =
+document.getElementById("password");
+
+const confirmPassword =
+document.getElementById("confirmPassword");
+
+const message =
+document.getElementById("passwordMessage");
+
+function validatePassword(){
+
+    if(confirmPassword.value === "")
+    {
+        message.innerHTML = "";
+        return;
+    }
+
+    if(password.value !== confirmPassword.value)
+    {
+        message.innerHTML =
+        "Passwords do not match";
+    }
+    else
+    {
+        message.innerHTML =
+        "Passwords match";
+
+        message.classList.remove("text-danger");
+        message.classList.add("text-success");
+    }
+
+}
+
+password.addEventListener(
+"keyup",
+validatePassword
+);
+
+confirmPassword.addEventListener(
+"keyup",
+validatePassword
+);
+
+</script>
+
+{% endblock %}

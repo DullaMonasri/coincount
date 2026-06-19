@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container py-4">
+
+<h2 class="mb-4">Savings Goals</h2>
+
+<form method="POST" class="card shadow border-0 p-4">
+
+    <div class="mb-3">
+        <label class="form-label">Goal Name</label>
+        <input type="text"
+               name="goal"
+               class="form-control"
+               required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Target Amount</label>
+        <input type="number"
+               name="target"
+               class="form-control"
+               required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Saved Amount</label>
+        <input type="number"
+               name="saved"
+               class="form-control"
+               required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Create Goal
+    </button>
+
+</form>
+
+<div class="row mt-4">
+
+    {% for goal in goals %}
+
+    <div class="col-md-4 mb-4">
+
+        <div class="card shadow border-0">
+
+            <div class="card-body">
+
+                <h5>{{ goal.goal_name }}</h5>
+
+                <p>
+                    <strong>Target:</strong>
+                    ₹{{ goal.target_amount }}
+                </p>
+
+                <p>
+                    <strong>Saved:</strong>
+                    ₹{{ goal.saved_amount }}
+                </p>
+
+                {% if goal.target_amount > 0 %}
+                    {% set percentage = ((goal.saved_amount / goal.target_amount) * 100) | round(0) %}
+                {% else %}
+                    {% set percentage = 0 %}
+                {% endif %}
+
+                <div class="progress mb-3">
+
+                    <div class="progress-bar bg-success"
+                         role="progressbar"
+                         style="width: {{ percentage }}%;">
+
+                        {{ percentage }}%
+
+                    </div>
+
+                </div>
+
+                <div class="d-flex gap-2">
+
+                    <a href="/edit_goal/{{ goal.goal_id }}"
+                       class="btn btn-warning btn-sm">
+
+                        Edit
+
+                    </a>
+
+                    <a href="/delete_goal/{{ goal.goal_id }}"
+                       class="btn btn-danger btn-sm"
+                       onclick="return confirm('Delete this goal?')">
+
+                        Delete
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% else %}
+
+    <div class="col-12">
+
+        <div class="alert alert-info">
+
+            No savings goals found.
+            Create your first goal above.
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+</div>
+
+{% endblock %}

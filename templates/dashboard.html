@@ -1,0 +1,404 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="row">
+
+        <!-- Sidebar -->
+
+        <div class="col-lg-2 sidebar">
+
+            <h4 class="text-center mb-4">
+
+                <i class="fas fa-coins"></i>
+
+                CoinCount
+
+            </h4>
+
+            <a href="/dashboard">
+                <i class="fas fa-chart-line"></i>
+                Dashboard
+            </a>
+
+            <a href="/expenses">
+                <i class="fas fa-wallet"></i>
+                Expenses
+            </a>
+
+            <a href="/income">
+                <i class="fas fa-sack-dollar"></i>
+                Income
+            </a>
+
+            <a href="/budget">
+                <i class="fas fa-chart-pie"></i>
+                Budget
+            </a>
+
+            <a href="/savings">
+                <i class="fas fa-piggy-bank"></i>
+                Savings
+            </a>
+
+            <a href="/trips">
+                <i class="fas fa-plane-departure"></i>
+                Trips
+            </a>
+
+            <a href="/reports">
+                <i class="fas fa-chart-bar"></i>
+                Reports
+            </a>
+
+            <a href="/profile">
+                <i class="fas fa-user"></i>
+                Profile
+            </a>
+
+            <a href="/logout">
+                <i class="fas fa-right-from-bracket"></i>
+                Logout
+            </a>
+
+        </div>
+
+        <!-- Main Content -->
+
+        <div class="col-lg-10 main-content">
+
+            <!-- Welcome Banner -->
+
+            <div class="banner-card mb-4">
+
+                <div class="banner-content">
+
+                    <h2>
+
+                        Welcome Back,
+                        {{ session['name'] }} 👋
+
+                    </h2>
+
+                    <p>
+
+                        Track your money,
+                        control your spending,
+                        and achieve your financial goals.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- Statistics -->
+
+            <div class="row">
+
+                <div class="col-md-3">
+
+                    <a href="/income"
+                       class="text-decoration-none">
+
+                        <div class="dashboard-card">
+
+                            <div class="card-body text-center">
+
+                                <i class="fas fa-sack-dollar dashboard-icon"></i>
+
+                                <div class="stat-title">
+
+                                    Total Income
+
+                                </div>
+
+                                <div class="stat-value">
+
+                                    ₹{{ income }}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </a>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <a href="/expenses"
+                       class="text-decoration-none">
+
+                        <div class="dashboard-card">
+
+                            <div class="card-body text-center">
+
+                                <i class="fas fa-wallet dashboard-icon"></i>
+
+                                <div class="stat-title">
+
+                                    Total Expenses
+
+                                </div>
+
+                                <div class="stat-value">
+
+                                    ₹{{ expense }}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </a>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <a href="/budget"
+                       class="text-decoration-none">
+
+                        <div class="dashboard-card">
+
+                            <div class="card-body text-center">
+
+                                <i class="fas fa-chart-pie dashboard-icon"></i>
+
+                                <div class="stat-title">
+
+                                    Remaining Balance
+
+                                </div>
+
+                                <div class="stat-value">
+
+                                    ₹{{ savings }}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </a>
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <a href="/savings"
+                       class="text-decoration-none">
+
+                        <div class="dashboard-card">
+
+                            <div class="card-body text-center">
+
+                                <i class="fas fa-piggy-bank dashboard-icon"></i>
+
+                                <div class="stat-title">
+
+                                    Savings
+
+                                </div>
+
+                                <div class="stat-value">
+
+                                    ₹{{ savings }}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- Charts -->
+
+            <div class="row mt-4">
+
+                <div class="col-lg-6">
+
+                    <div class="chart-card">
+
+                        <div class="card-body">
+
+                            <h5>
+
+                                Expense Categories
+
+                            </h5>
+
+                            <canvas id="expensePie"></canvas>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg-6">
+
+                    <div class="chart-card">
+
+                        <div class="card-body">
+
+                            <h5>
+
+                                Monthly Expenses
+
+                            </h5>
+
+                            <canvas id="monthlyChart"></canvas>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Recent Transactions -->
+
+            <div class="card recent-card mt-4">
+
+                <div class="card-body">
+
+                    <h5 class="mb-3">
+
+                        Recent Transactions
+
+                    </h5>
+
+                    <table class="table transaction-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Category</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for item in recent %}
+
+                            <tr
+                            onclick="window.location='/expenses'"
+                            style="cursor:pointer">
+
+                                <td>
+                                    {{ item.category }}
+                                </td>
+
+                                <td>
+                                    ₹{{ item.amount }}
+                                </td>
+
+                                <td>
+                                    {{ item.date }}
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+new Chart(
+document.getElementById("expensePie"),
+{
+    type:"doughnut",
+
+    data:{
+
+        labels:[
+        "Food",
+        "Shopping",
+        "Bills",
+        "Travel"
+        ],
+
+        datasets:[{
+
+            data:[
+            35,
+            25,
+            20,
+            20
+            ]
+
+        }]
+
+    }
+
+}
+);
+
+new Chart(
+document.getElementById("monthlyChart"),
+{
+type:"bar",
+
+data:{
+labels:[
+"Jan",
+"Feb",
+"Mar",
+"Apr",
+"May",
+"Jun"
+],
+
+datasets:[{
+label:"Expenses",
+
+data:[
+5000,
+7000,
+4500,
+8000,
+6000,
+9000
+]
+}]
+}
+}
+);
+
+</script>
+
+{% endblock %}

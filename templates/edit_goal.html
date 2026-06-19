@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="card shadow border-0">
+
+        <div class="card-body">
+
+            <h2 class="mb-4">Edit Savings Goal</h2>
+
+            <form method="POST">
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Goal Name
+                    </label>
+
+                    <input type="text"
+                           name="goal"
+                           class="form-control"
+                           value="{{ goal.goal_name }}"
+                           required>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Target Amount
+                    </label>
+
+                    <input type="number"
+                           name="target"
+                           class="form-control"
+                           value="{{ goal.target_amount }}"
+                           required>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Saved Amount
+                    </label>
+
+                    <input type="number"
+                           name="saved"
+                           class="form-control"
+                           value="{{ goal.saved_amount }}"
+                           required>
+
+                </div>
+
+                <button type="submit"
+                        class="btn btn-success">
+
+                    Update Goal
+
+                </button>
+
+                <a href="/savings"
+                   class="btn btn-secondary">
+
+                    Cancel
+
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
