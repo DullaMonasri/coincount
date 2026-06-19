@@ -1060,6 +1060,8 @@ def not_found(error):
 def internal_error(error):
     return render_template('500.html'), 500
 
+import os
+
 if __name__ == '__main__':
-    # Development only - use gunicorn for production
-    app.run(debug=False)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=False)
